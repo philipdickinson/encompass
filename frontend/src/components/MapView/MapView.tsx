@@ -91,7 +91,7 @@ export let MapView = withStore(
   return <div className='MapView'>
     <Map
       fitBoundsOptions={FIT_BOUNDS_OPTIONS}
-      style='mapbox://styles/bayesimpact/cj8qeq6cpajqc2ts1xfw8rf2q'
+      style='mapbox://styles/bayesimpact/cjcutfkpq2c0o2so0l13aq9xb'
       center={store.get('mapCenter')}
       onDragEnd={(map: MapboxGL.Map) => store.set('mapCenter')(map.getCenter())}
       onRender={(map: MapboxGL.Map) => store.get('map') || store.set('map')(map)}
