@@ -11,6 +11,11 @@ import { summaryStatisticsByServiceArea } from '../../utils/data'
 import { formatNumber, formatPercentage } from '../../utils/formatters'
 import { getLegend } from '../MapLegend/MapLegend'
 import { StatsBox } from '../StatsBox/StatsBox'
+import {
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table'
 
 type Props = {
   serviceAreas: string[]
@@ -77,24 +82,24 @@ export let AdequacyDoughnut = withStore('adequacies', 'method')<Props>(({ servic
         }
       } as any}
     />
-    <StatsBox className='HighLevelStats' withBorders>
-      <tr>
-        <th>Service Areas</th>
-        <th>Population</th>
-        <th>Providers</th>
-      </tr>
-      <tr>
-        <td>{serviceAreas.length.toLocaleString()}</td>
-        <td>{totalPopulation.toLocaleString()}</td>
-        <td>{store.get('providers').length.toLocaleString()}</td>
-      </tr>
+    <StatsBox>
+      <TableRow>
+        <TableHeaderColumn>Service Areas</TableHeaderColumn>
+        <TableHeaderColumn>Population</TableHeaderColumn>
+        <TableHeaderColumn>Providers</TableHeaderColumn>
+      </TableRow>
+      <TableRow>
+        <TableRowColumn>{serviceAreas.length.toLocaleString()}</TableRowColumn>
+        <TableRowColumn>{totalPopulation.toLocaleString()}</TableRowColumn>
+        <TableRowColumn>{store.get('providers').length.toLocaleString()}</TableRowColumn>
+      </TableRow>
     </StatsBox>
-    <StatsBox className='HighLevelStats' withBorders>
-      <tr>
-        <th>Access</th>
-        <th>Population (%)</th>
-        <th>Population (#)</th>
-      </tr>
+    <StatsBox>
+      <TableRow>
+        <TableHeaderColumn>Access</TableHeaderColumn>
+        <TableHeaderColumn>Population (%)</TableHeaderColumn>
+        <TableHeaderColumn>Population (#)</TableHeaderColumn>
+      </TableRow>
       {adequacyRow(populationByAdequacy[0], totalPopulation, method, AdequacyMode.ADEQUATE_0)}
       {adequacyRow(populationByAdequacy[1], totalPopulation, method, AdequacyMode.ADEQUATE_1)}
       {adequacyRow(populationByAdequacy[2], totalPopulation, method, AdequacyMode.ADEQUATE_2)}
@@ -105,11 +110,11 @@ export let AdequacyDoughnut = withStore('adequacies', 'method')<Props>(({ servic
 
 function adequacyRow(populationByAdequacy: number, totalPopulation: number, method: Method, adequacyMode: AdequacyMode) {
   return (
-    <tr>
-      <td>{getLegend(method, adequacyMode)}</td>
-      <td>{formatPercentage(100 * populationByAdequacy / totalPopulation)}</td>
-      <td>{formatNumber(populationByAdequacy)}</td>
-    </tr>
+    <TableRow>
+      <TableRowColumn>{getLegend(method, adequacyMode)}</TableRowColumn>
+      <TableRowColumn>{formatPercentage(100 * populationByAdequacy / totalPopulation)}</TableRowColumn>
+      <TableRowColumn>{formatNumber(populationByAdequacy)}</TableRowColumn>
+    </TableRow>
   )
 }
 function label(populationByAdequacy: number[]) {

@@ -1,22 +1,22 @@
 import * as React from 'react'
-import './StatsBox.css'
+import {
+  Table,
+  TableBody
+} from 'material-ui/Table'
 
 type Props = {
-  className?: string
-  withFixedColumns?: true
-  withBorders?: true
-  withHorizontalLines?: true
 }
 
 export let StatsBox: React.StatelessComponent<Props> = ({
-  children, className, withFixedColumns, withBorders, withHorizontalLines
+  children
 }) =>
-  <table className={
-    'StatsBox'
-    + (className ? ` ${className}` : '')
-    + (withBorders ? ' -withBorders' : '')
-    + (withFixedColumns ? ' -withFixedColumns' : '')
-    + (withHorizontalLines ? ' -withHorizontalLines' : '')
-  }>
-    <tbody>{children}</tbody>
-  </table>
+  <Table>
+    {/*<TableHeader>*/}
+      {/*<TableRow>*/}
+        {/*<TableHeaderColumn></TableHeaderColumn>*/}
+        {/*<TableHeaderColumn></TableHeaderColumn>*/}
+        {/*<TableHeaderColumn></TableHeaderColumn>*/}
+      {/*</TableRow>*/}
+    {/*</TableHeader>*/}
+    <TableBody displayRowCheckbox={false}>{children}</TableBody>
+  </Table>

@@ -10,6 +10,11 @@ import { CensusAdequacyCharts } from '../CensusAdequacyCharts/CensusAdequacyChar
 import { CensusAdequacyTable } from '../CensusAdequacyTable/CensusAdequacyTable'
 import { DownloadAnalysisLink } from '../DownloadAnalysisLink/DownloadAnalysisLink'
 import { StatsBox } from '../StatsBox/StatsBox'
+import {
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table'
 import './CensusAnalytics.css'
 
 export let CensusAnalytics = withStore(
@@ -34,15 +39,15 @@ export let CensusAnalytics = withStore(
     </div>
   }
   return <div className='CensusAnalytics'>
-    <StatsBox className='HighLevelStats' withBorders withFixedColumns>
-      <tr>
-        <th>Total Population</th>
-        <th>Providers</th>
-      </tr>
-      <tr>
-        <td className='NumericTableCell'>{formatNumber(totalPopulation)}</td>
-        <td className='NumericTableCell'>{formatNumber(totalProviders)}</td>
-      </tr>
+    <StatsBox>
+      <TableRow>
+        <TableHeaderColumn>Total Population</TableHeaderColumn>
+        <TableHeaderColumn>Providers</TableHeaderColumn>
+      </TableRow>
+      <TableRow>
+        <TableRowColumn className='NumericTableCell'>{formatNumber(totalPopulation)}</TableRowColumn>
+        <TableRowColumn className='NumericTableCell'>{formatNumber(totalProviders)}</TableRowColumn>
+      </TableRow>
     </StatsBox>
     <CensusAdequacyTable serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
     <div className='DownloadLink'>

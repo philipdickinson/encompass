@@ -11,6 +11,11 @@ import { summaryStatisticsByServiceAreaAndCensus } from '../../utils/data'
 import { formatNumber, formatPercentage } from '../../utils/formatters'
 import { getLegend } from '../MapLegend/MapLegend'
 import { StatsBox } from '../StatsBox/StatsBox'
+import {
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table'
 
 type Props = {
   serviceAreas: string[],
@@ -48,14 +53,14 @@ export let CensusAdequacyTable = withStore('adequacies', 'method')<Props>(({ ser
   let censusGroups = ['Total'].concat(CENSUS_MAPPING[censusCategory])
 
   return <div>
-    <StatsBox className='HighLevelStats' withBorders withFixedColumns>
-      <tr>
-        <th style={firstColumnStyle}>Group</th>
-        <th>{getLegend(method, AdequacyMode.ADEQUATE_0)}</th>
-        <th>{getLegend(method, AdequacyMode.ADEQUATE_1)}</th>
-        <th>{getLegend(method, AdequacyMode.ADEQUATE_2)}</th>
-        <th>{getLegend(method, AdequacyMode.INADEQUATE)}</th>
-      </tr>
+    <StatsBox>
+      <TableRow>
+        <TableHeaderColumn style={firstColumnStyle}>Group</TableHeaderColumn>
+        <TableHeaderColumn>{getLegend(method, AdequacyMode.ADEQUATE_0)}</TableHeaderColumn>
+        <TableHeaderColumn>{getLegend(method, AdequacyMode.ADEQUATE_1)}</TableHeaderColumn>
+        <TableHeaderColumn>{getLegend(method, AdequacyMode.ADEQUATE_2)}</TableHeaderColumn>
+        <TableHeaderColumn>{getLegend(method, AdequacyMode.INADEQUATE)}</TableHeaderColumn>
+      </TableRow>
       {
         censusGroups.map(censusGroup =>
           adequacyRowByCensusGroup(censusGroup, populationByAdequacyByGroup[censusGroup], format)
@@ -68,17 +73,17 @@ export let CensusAdequacyTable = withStore('adequacies', 'method')<Props>(({ ser
 function adequacyRowByCensusGroup(censusGroup: string, populationByAdequacy: PopulationByAdequacy, format: Format) {
   let totalPopulation = populationByAdequacy.reduce((a: number, b: number) => a + b)
   return (
-    <tr>
-      <td>{censusGroup}</td>
+    <TableRow>
+      <TableRowColumn>{censusGroup}</TableRowColumn>
       {
         populationByAdequacy.map(_ => {
           if (format === 'Percentage') {
-            return (<td className='NumericTableCell'>{formatPercentage(100 * _ / totalPopulation)}</td>)
+            return (<TableRowColumn className='NumericTableCell'>{formatPercentage(100 * _ / totalPopulation)}</TableRowColumn>)
           } else {
-            return (<td className='NumericTableCell'>{formatNumber(_)}</td>)
+            return (<TableRowColumn className='NumericTableCell'>{formatNumber(_)}</TableRowColumn>)
           }
         })
       }
-    </tr>
+    </TableRow>
   )
 }
