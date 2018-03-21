@@ -38,10 +38,10 @@ export function getLegend(method: Method, standard: AdequacyMode) {
       break
     case 'driving_time':
       switch (standard) {
-        case AdequacyMode.ADEQUATE_0: return '< 30 min'
-        case AdequacyMode.ADEQUATE_1: return '< 45 min'
-        case AdequacyMode.ADEQUATE_2: return '< 60 min'
-        case AdequacyMode.INADEQUATE: return '> 60 min'
+        case AdequacyMode.ADEQUATE_0: return '< 15 min'
+        case AdequacyMode.ADEQUATE_1: return '< 30 min'
+        case AdequacyMode.ADEQUATE_2: return '< 45 min'
+        case AdequacyMode.INADEQUATE: return '> 45 min'
       }
       break
   }

@@ -350,13 +350,13 @@ function getAdequacyMode(
   }
 
   if (method === 'driving_time') {
-    if (adequacy.to_closest_provider <= 30) {
+    if (adequacy.to_closest_provider <= 15) {
       return AdequacyMode.ADEQUATE_0
     }
-    if (adequacy.to_closest_provider <= 45) {
+    if (adequacy.to_closest_provider <= 30) {
       return AdequacyMode.ADEQUATE_1
     }
-    if (adequacy.to_closest_provider <= 60) {
+    if (adequacy.to_closest_provider <= 45) {
       return AdequacyMode.ADEQUATE_2
     }
   }

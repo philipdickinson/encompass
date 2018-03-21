@@ -198,7 +198,7 @@ class MapBoxDrivingTime(APIDrivingTime):
             source_points[0],
             len(destination_points)
         ))
-        request_url = 'https://api.mapbox.com/directions-matrix/v1/mapbox/driving/{points}'
+        request_url = 'https://api.mapbox.com/directions-matrix/v1/mapbox/walking/{points}'
         all_points = source_points + destination_points
         if len(all_points) > self.max_matrix_size:
             raise RuntimeError('Mapbox matrix API only accepts 25 locations.')

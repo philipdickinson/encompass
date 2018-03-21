@@ -131,7 +131,7 @@ CONFIG = {
         },
         'mapbox': {
             'adequacy_executor_type': multiprocessing.dummy.Pool,  # For I/O-bound tasks.
-            'n_adequacy_processors': 255,
+            'n_adequacy_processors': 1,
             'exit_distance': 5.0 * ONE_MILE_IN_METERS
         }
     },
