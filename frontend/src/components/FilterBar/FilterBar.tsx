@@ -22,7 +22,7 @@ export let FilterBar = withStore('method', 'allowDrivingTime')(({ store }) => {
         }}
         value={store.get('method')}
       >
-        <MenuItem value='driving_time' primaryText='Driving Time' disabled={!store.get('allowDrivingTime')} />
+        <MenuItem value='driving_time' primaryText='Driving Time' disabled={false} />
         <MenuItem value='straight_line' primaryText='Straight-line Distance' />
       </DropDownMenu>
     </div>

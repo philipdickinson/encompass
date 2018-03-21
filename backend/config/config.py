@@ -109,7 +109,7 @@ CONFIG = {
     'geocoder': 'oxcoder',
     'measurer': {
         'straight_line': 'haversine',
-        'driving_time': 'osrm'
+        'driving_time': 'mapbox'
     },
     'census_data': False,
     'census_mapping_json': '/app/shared/census_mapping.json',
