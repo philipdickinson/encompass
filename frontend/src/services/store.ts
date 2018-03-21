@@ -7,6 +7,8 @@ import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM } from '../constants/map'
 import { State } from '../constants/states'
 import { withEffects } from './effects'
 
+const { ENV } = process.env
+
 type Actions = {
 
   adequacies: Adequacies
@@ -31,9 +33,14 @@ type Actions = {
   success: string | null
 
   /**
-  * Control opening of the about page.
-  */
+   * Control opening of the about page.
+   */
   isAboutDialogOpen: boolean
+
+  /**
+   * Control selection of counties for add dataset drawer.
+   */
+  useCustomCountyUpload: boolean | null
 
   mapCenter: {
     lat: number
@@ -44,7 +51,7 @@ type Actions = {
 
   mapCursor: string
 
-  mapZoom: number
+  mapZoom: number[] | null
 
   method: Method
 
@@ -148,12 +155,13 @@ let store = withEffects(createStore<Actions>({
   counties: [],
   error: null,
   success: null,
-  isAboutDialogOpen: false,
+  isAboutDialogOpen: (ENV === 'PRD'),
+  useCustomCountyUpload: null,
   map: null,
   mapCenter: DEFAULT_MAP_CENTER,
   mapCursor: '',
   mapZoom: DEFAULT_MAP_ZOOM,
-  method: 'haversine',
+  method: 'straight_line',
   providerIndex: 0,
   providers: [],
   representativePoints: [],

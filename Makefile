@@ -2,25 +2,19 @@ deploy:
 	git pull
 	$(MAKE) clear-cache
 	docker-compose down
-	docker-compose up -d backend frontend
+	docker-compose -f docker-compose.yml -f docker-compose.remote.yml up -d backend frontend
 
 local:
-	docker-compose up backend frontend
+	docker-compose -f docker-compose.yml -f docker-compose.local.yml up backend frontend
 
 local-db:
-	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml up -d db
+	docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.override.db.yml up -d db
 	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml up backend frontend
 
 initialize-local-db:
 	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/initialize_postgres.py"
 	echo "Performing load of initial Encompass data."
 	# docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/load_representative_points.py -u -f 'data/sample/los-angeles-points.geojson'"
-	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/load_addresses.py -f 'data/sample/mock-providers.csv'"
-
-initialize-local-db:
-	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/initialize_postgres.py"
-	echo "Performing load of initial Encompass data."
-	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/load_representative_points.py -f 'data/sample/los-angeles-points.geojson'"
 	docker-compose -f docker-compose.yml -f docker-compose.override.db.yml run backend bash -c "python runners/load_addresses.py -f 'data/sample/mock-providers.csv'"
 
 rebuild:
