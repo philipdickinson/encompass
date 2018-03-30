@@ -1,6 +1,6 @@
 """Test fetch queries."""
 from backend.lib.database.postgres import connect
-from backend.lib.fetch import providers, representative_points
+from backend.lib.fetch import census, providers, representative_points
 
 engine = connect.create_db_engine()
 
@@ -114,3 +114,19 @@ class TestFetchServiceAreas():
         """Test fetch_all_service_areas."""
         results = representative_points.fetch_all_service_areas(engine=engine)
         assert len(results) > 0
+
+
+class TestFetchCensus(object):
+    """Test fetching of census data for service areas."""
+
+    @staticmethod
+    def test_fetch_census_info_by_service_area():
+        """Test fetch_census_info_by_service_area."""
+        output = census.fetch_census_info_by_service_area(['ca_los_angeles_county_00000'], engine)
+        assert output['ca_los_angeles_county_00000']
+
+    @staticmethod
+    def test_fetch_census_info_by_service_area_missing_service_area():
+        """Test fetch_census_info_by_service_area for a non-existent service area."""
+        output = census.fetch_census_info_by_service_area(['i_am_not_a_valid_service_area'], engine)
+        assert output == {}
