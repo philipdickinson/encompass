@@ -121,11 +121,9 @@ class TestFetchServiceAreas():
 class TestFetchCensus(object):
     """Test fetching of census data for service areas."""
 
-    @staticmethod
-    @mock.patch('backend.lib.fetch.representative_points.fetch_representative_points')
-    def test_fetch_census_info_by_service_area(mock_fetch_rps):
-        """Test fetch_census_info_by_service_area."""
-        mock_point = {
+    def setup(self):
+        """Initialize a mock representative point dictionary with census data."""
+        self.mock_point = {
             'id': 17323,
             'service_area_id': 'ca_los_angeles_county_00000',
             'lat': 74.38732,
@@ -170,13 +168,19 @@ class TestFetchCensus(object):
                 }
             }
         }
-        mock_fetch_rps.return_value = [mock_point] * 10
+
+    @mock.patch('backend.lib.fetch.representative_points.fetch_representative_points')
+    def test_fetch_census_info_by_service_area(self, mock_fetch_rps):
+        """Test fetch_census_info_by_service_area."""
+        mock_fetch_rps.return_value = [self.mock_point] * 10
 
         output = census.fetch_census_info_by_service_area(['ca_los_angeles_county_00000'], engine)
-        assert output['ca_los_angeles_county_00000'] == mock_point['demographics']
+        assert output['ca_los_angeles_county_00000'] == self.mock_point['demographics']
 
     @staticmethod
-    def test_fetch_census_info_by_service_area_missing_service_area():
+    @mock.patch('backend.lib.fetch.representative_points.fetch_representative_points')
+    def test_fetch_census_info_by_service_area_missing_service_area(mock_fetch_rps):
         """Test fetch_census_info_by_service_area for a non-existent service area."""
+        mock_fetch_rps.return_value = []
         output = census.fetch_census_info_by_service_area(['i_am_not_a_valid_service_area'], engine)
         assert output == {}
