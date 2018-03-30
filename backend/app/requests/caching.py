@@ -37,8 +37,9 @@ def _cache(func, hint_fields, **kwargs):
         prefix=func.__name__,
         hint_values=hint_values,
     )
+    print(cache_filepath)
     # If caching is disabled or a hint is missing, call the function normally.
-    if not config.get('cache.enabled') or not all(hint_values):
+    if not config.get('cache.enabled'):  # or not any(hint_values):
         response = func(**kwargs)
     # If the file exists, read and return.
     elif os.path.isfile(cache_filepath):

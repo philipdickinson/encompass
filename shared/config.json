@@ -1,6 +1,6 @@
 {
     "enable_geocoding": true,
-    "include_census_data": true,
+    "include_census_data": false,
     "_backend": "Configuration used by the backend.",
     "use_address_cache": true,
     "geocoder": "oxcoder",

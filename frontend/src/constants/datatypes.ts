@@ -27,10 +27,11 @@ export type CensusGroup = {
 }
 
 export type Config = {
+  enable_geocoding: boolean
+  include_census_data: boolean
+  limit_upload_file_size: boolean
   show_about_dialog_on_start: boolean
   title_suffix: string
-  enable_geocoding: boolean
-  limit_upload_file_size: boolean
   api: {
     [key: string]: string | boolean
   }

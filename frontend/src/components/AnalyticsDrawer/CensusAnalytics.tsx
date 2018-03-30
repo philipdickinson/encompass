@@ -1,11 +1,13 @@
 import { isEmpty } from 'lodash'
 import CircularProgress from 'material-ui/CircularProgress'
 import * as React from 'react'
+import { CONFIG } from '../../config/config'
 import { ADEQUACY_COLORS } from '../../constants/colors'
 import { AdequacyMode } from '../../constants/datatypes'
 import { withStore } from '../../services/store'
 import { summaryStatisticsByServiceArea } from '../../utils/data'
 import { formatNumber } from '../../utils/formatters'
+import { AdequacyDoughnut } from '../AdequacyDoughnut/AdequacyDoughnut'
 import { CensusAdequacyCharts } from '../CensusAdequacyCharts/CensusAdequacyCharts'
 import { CensusAdequacyTable } from '../CensusAdequacyTable/CensusAdequacyTable'
 import { DownloadAnalysisLink } from '../DownloadAnalysisLink/DownloadAnalysisLink'
@@ -44,10 +46,32 @@ export let CensusAnalytics = withStore(
         <td className='NumericTableCell'>{formatNumber(totalProviders)}</td>
       </tr>
     </StatsBox>
-    <CensusAdequacyTable serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
-    <div className='DownloadLink'>
-      <DownloadAnalysisLink />
-    </div>
-    <CensusAdequacyCharts serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+    <AdequacyChart
+      include_census_data={CONFIG.include_census_data}
+      selectedServiceAreas={selectedServiceAreas}
+      selectedCensusCategory={selectedCensusCategory}
+    />
   </div>
 })
+
+type Props = {
+  include_census_data: boolean
+  selectedServiceAreas: string[]
+  selectedCensusCategory: string
+}
+
+let AdequacyChart: React.StatelessComponent<Props> = ({
+  include_census_data, selectedServiceAreas, selectedCensusCategory
+}) => {
+  if (include_census_data === true) {
+    return <div>
+      <CensusAdequacyTable serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+      < div className='DownloadLink'>
+        <DownloadAnalysisLink />
+      </div>
+      <CensusAdequacyCharts serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+    </div>
+  }
+  console.log('Hello')
+  return <AdequacyDoughnut serviceAreas={selectedServiceAreas} />
+}
