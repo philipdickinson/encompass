@@ -173,7 +173,6 @@ class TestFetchCensus(object):
     def test_fetch_census_info_by_service_area(self, mock_fetch_rps):
         """Test fetch_census_info_by_service_area."""
         mock_fetch_rps.return_value = [self.mock_point] * 10
-
         output = census.fetch_census_info_by_service_area(['ca_los_angeles_county_00000'], engine)
         assert output['ca_los_angeles_county_00000'] == self.mock_point['demographics']
 
