@@ -1,8 +1,8 @@
 """Test fetch queries."""
-import mock
-
 from backend.lib.database.postgres import connect
 from backend.lib.fetch import census, providers, representative_points
+
+import mock
 
 engine = connect.create_db_engine()
 
