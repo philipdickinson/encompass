@@ -64,14 +64,22 @@ let AdequacyChart: React.StatelessComponent<Props> = ({
   include_census_data, selectedServiceAreas, selectedCensusCategory
 }) => {
   if (include_census_data === true) {
-    return <div>
-      <CensusAdequacyTable serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+    return (
+      <>
+        <CensusAdequacyTable serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+        < div className='DownloadLink'>
+          <DownloadAnalysisLink />
+        </div>
+        <CensusAdequacyCharts serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
+      </>
+    )
+  }
+  return (
+    <>
+      <AdequacyDoughnut serviceAreas={selectedServiceAreas} />
       < div className='DownloadLink'>
         <DownloadAnalysisLink />
       </div>
-      <CensusAdequacyCharts serviceAreas={selectedServiceAreas} censusCategory={selectedCensusCategory} />
-    </div>
-  }
-  console.log('Hello')
-  return <AdequacyDoughnut serviceAreas={selectedServiceAreas} />
+    </>
+  )
 }
